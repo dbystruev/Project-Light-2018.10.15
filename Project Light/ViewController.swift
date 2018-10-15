@@ -6,6 +6,7 @@
 //  Copyright © 2018 Denis Bystruev. All rights reserved.
 //
 
+import AVFoundation
 import UIKit
 
 class ViewController: UIViewController {
@@ -22,7 +23,21 @@ class ViewController: UIViewController {
     }
 
     func updateUI() {
-        view.backgroundColor = isOn ? .white : .black
+        let device = AVCaptureDevice.default(for: .video)
+        
+        if let device = device {
+            do {
+                try device.lockForConfiguration()
+                device.torchMode = isOn ? .on : .off
+                device.unlockForConfiguration()
+                view.backgroundColor = .black
+            } catch {
+                print(error)
+            }
+        } else {
+            view.backgroundColor = isOn ? .white : .black
+        }
+        
     }
     
     override var prefersStatusBarHidden: Bool {
