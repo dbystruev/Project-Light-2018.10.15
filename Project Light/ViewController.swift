@@ -10,14 +10,23 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBAction func buttonPressed() {
-        print(#function)
+        isOn = !isOn
+        updateUI()
     }
+    
+    var isOn = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        updateUI()
     }
 
-
+    func updateUI() {
+        view.backgroundColor = isOn ? .white : .black
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 }
 
